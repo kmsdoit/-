@@ -1,0 +1,9 @@
+POST http://localhost:5001/create/book
+Content-Type: application/json
+
+{
+  "keyword" : "python",
+  "publisher" : "kmsdoit",
+  "price" : 50000,
+  "image" : "me.png"
+}

@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Optional
 
 from pydantic import BaseModel
 
@@ -32,6 +32,25 @@ class User(UserBase):
     id: int
     is_active: bool
     items: List[Item] = []
+
+    class Config:
+        orm_mode = True
+
+
+class BookBase(BaseModel):
+    keyword: str
+
+
+class BookCreate(BookBase):
+    publisher: str
+    price: int
+    image: str
+
+
+class Book(BookBase):
+    publisher: str
+    price: int
+    image: str
 
     class Config:
         orm_mode = True

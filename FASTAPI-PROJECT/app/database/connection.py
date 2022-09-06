@@ -3,11 +3,10 @@ import os
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+from config import POSTGRES_DB_NAME,POSTGRES_DB_PORT,POSTGRES_DB_HOST,POSTGRES_DB_USER,POSTGRES_DB_PASSWORD
 
-load_dotenv()
 
-URL = f"postgresql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
+URL = f"postgresql://{POSTGRES_DB_USER}:{POSTGRES_DB_PASSWORD}@{POSTGRES_DB_HOST}:{POSTGRES_DB_PORT}/{POSTGRES_DB_NAME}"
 
 engine = create_engine(
     URL

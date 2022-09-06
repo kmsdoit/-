@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{title}}</title>
+    <link href="https://unpkg.com/mvp.css" rel="stylesheet">
+</head>
+<body>
+    <header>콜렉터 북북이</header>
+    <center>
+        <form id="search_form" action="/search">
+            <input type="search" placeholder="keyword" id="search_input" name="q">
+            <button type="submit">검색</button>
+        </form>
+    </center>
+    <main>
+        {{keyword}}
+    </main>
+</body>
+</html>
