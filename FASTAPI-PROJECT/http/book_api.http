@@ -7,3 +7,7 @@ Content-Type: application/json
   "price" : 50000,
   "image" : "me.png"
 }
+
+### crawling data DB insert
+POST http://localhost:5001/naver-api/book/search?q=java
+Content-Type: application/json
