@@ -63,11 +63,19 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return items
 
 
-@app.post("/create/book", response_model=schemas.Book)
-async def create_book(request: Request, book: schemas.BookCreate, db: Session = Depends(get_db)):
-
-    if db_book is None:
-        raise HTTPException(status_code=404, detail="User not found")
+@app.post("/naver-api/book/search")
+async def create_book(q: str, db: Session = Depends(get_db)):
+    book_model = schemas.BookCreate
+    keyword = q
+    naver_book_scraper = NaverBookScraper()
+    # print(keyword)
+    books = await naver_book_scraper.search(keyword=keyword, total_page=10)
+    for book in books:
+        book_model.keyword = keyword
+        book_model.price = book['discount']
+        book_model.publisher = book['publisher']
+        book_model.image = book['image']
+        db_book = crud.create_book(db, book_model)
     return db_book
 
 
@@ -79,18 +87,8 @@ async def root(request: Request):
     )
 
 
-@app.get("/search", response_class=HTMLResponse)
+@app.get("/search", response_class=HTMLResponse, response_model=schemas.Book)
 async def search(request: Request, q: str):
-    keyword = q
-    keyword = q
-    naver_book_scraper = NaverBookScraper()
-    books = await naver_book_scraper.search(keyword=keyword, total_page=10)
-    for book in books:
-        book_model.keyword = keyword
-        book_model.price = book['price']
-        book_model.publisher = book['publisher']
-        book_model.image = book['image']
-        # db_book = crud.create_book(db, book_model)
     return templates.TemplateResponse(
         "./index.html",
         {"request": request, "q": q}
