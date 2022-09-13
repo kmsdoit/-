@@ -27,6 +27,14 @@ def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Item).offset(skip).limit(limit).all()
 
 
+def get_books(db: Session):
+    return db.query(models.Book).all()
+
+
+def get_book_with_book_id(book_id: int, db: Session):
+    return db.query(models.Book).filter(models.Book.id == book_id).first()
+
+
 def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
     db_item = models.Item(**item.dict(), owner_id=user_id)
     db.add(db_item)

@@ -78,6 +78,18 @@ async def create_book(q: str, db: Session = Depends(get_db)):
         db_book = crud.create_book(db, book_model)
     return db_book
 
+@app.get("/books")
+async def all_books(db:Session = Depends(get_db)):
+    books = crud.get_books(db)
+
+    return books
+
+@app.get("/books/{book_id}")
+async def search_books_id(book_id:int,db:Session = Depends(get_db)):
+    books = crud.get_book_with_book_id(book_id,db)
+
+    return books
+
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
